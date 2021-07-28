@@ -1,0 +1,12 @@
+node('MASTER') {
+    stage('scm') {
+        git 'https://github.com/bhupesh019/openmrs-core.git'
+    }
+    stage('build') {
+        sh 'mvn clean package'
+    }
+    stage('postbuild') {
+        junit '**/TEST-*.xml'
+        archive '**/*.war'
+    }
+}
